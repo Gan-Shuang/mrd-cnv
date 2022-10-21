@@ -101,7 +101,7 @@ def get_gene_info(outputdir,sample_name):
     call(get_bed_commond,shell=True)
     rm_header_commond="sed -i '1d' "+outputdir+"/"+sample_name+"_cna.bed"
     call(rm_header_commond,shell=True)
-    anno_bed_commond=("bedtools intersect -a /fastzone/soft/ctdna_pipline/containers/ichorCNA/ref/annotation_genesymbol.bed -b "+outputdir+"/"+
+    anno_bed_commond=("bedtools intersect -a ref/annotation_genesymbol.bed -b "+outputdir+"/"+
                       sample_name+"_cna.bed"+"|awk -F '\t' '{print $4}' |sort|uniq > "+
                       outputdir+"/"+sample_name+"_gene_list.txt")
     call(anno_bed_commond,shell=True)
@@ -109,7 +109,7 @@ def get_gene_info(outputdir,sample_name):
                               "/anno_gene.txt|sort|uniq -d > "+outputdir+"/reported_genes.txt")
     call(get_common_genes_commond,shell=True)
     get_geneinfo_commond=("for i in `cat "+outputdir+
-                          "/reported_genes.txt`;do grep -P '\t'${i}'$' /fastzone/soft/ctdna_pipline/containers/ichorCNA/ref/annotation_genesymbol.bed;done > "+
+                          "/reported_genes.txt`;do grep -P '\t'${i}'$' ref/annotation_genesymbol.bed;done > "+
                           outputdir+"/gene_info.txt")
     call(get_geneinfo_commond,shell=True)
 
@@ -182,7 +182,7 @@ def chr_region(outputdir,sample_name):
             f1=open(outputdir+"/tmp/info.bed","w")
             f1.write(info+"\n")
             f1.close()
-            commond=("bedtools intersect -b "+outputdir+"/tmp/info.bed -a /fastzone/soft/ctdna_pipline/containers/ichorCNA/ref/annotation_genesymbol.bed > "+
+            commond=("bedtools intersect -b "+outputdir+"/tmp/info.bed -a ref/annotation_genesymbol.bed > "+
                     outputdir+"/tmp/gene.bed")
             call(commond,shell=True)
             gene_list=[]
@@ -195,11 +195,11 @@ def chr_region(outputdir,sample_name):
 
 def plot_chr(seg_file,gene_file,ploidy,outputdir):
     if len(open(gene_file,"r").readlines())==0:
-        plot_commond=("Rscript "+"/fastzone/soft/ctdna_pipline/containers/ichorCNA/scripts/plot_nogene.r "+
+        plot_commond=("Rscript "+"scripts/plot_nogene.r "+
                   " --input "+seg_file+" --genes "+gene_file+" --ploidy "+ploidy+" --outdir "+outputdir)
         check_call(plot_commond,shell=True)
     if len(open(gene_file,"r").readlines())!=0:
-        plot_commond=("Rscript "+"/fastzone/soft/ctdna_pipline/containers/ichorCNA/scripts/plot.r "+
+        plot_commond=("Rscript "+"scripts/plot.r "+
                   " --input "+seg_file+" --genes "+gene_file+" --ploidy "+ploidy+" --outdir "+outputdir)
         check_call(plot_commond,shell=True)
 
@@ -213,7 +213,7 @@ input_bam=args.bam_file
 output_dir=args.output_dir
 
 if __name__=="__main__":
-    image_run="singularity exec -B /mnt:/mnt,/fastzone:/fastzone /fastzone/soft/ctdna_pipline/containers/ichorCNA/ichorcna.sif"
+    image_run="singularity exec -B /mnt:/mnt,/fastzone:/fastzone ichorcna.sif"
     sample_name=input_bam.split("/")[-1].split(".")[0].split("-")[0]
     ##mkdir for output
     call(["mkdir",output_dir])
