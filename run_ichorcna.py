@@ -18,11 +18,11 @@ def load_yml(dir):
 
 def cnv_info(user,passwd):
     config = {
-          'host':'192.168.135.11',
-          'port':3306,
+          'host':'',
+          'port':,
           'user':user,
           'password':passwd,
-          'database':'smartonco_3',
+          'database':'',
           'charset':'utf8mb4',
           'cursorclass':pymysql.cursors.Cursor
           }
