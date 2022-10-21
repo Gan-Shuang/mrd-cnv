@@ -8,6 +8,7 @@ base on ichorCNA ,with built up environment.
 cd mrd-cnv
 singularity build ichorcna.sif docker://ganshuang0925/ichorcna_load
 ```
+> run pipline  
 ```
 singularity exec -B /mnt:/mnt ichorcna.sif python3 run_ichorcna.py -i [PATH/bam] -o [/PATH_to_result_dir/]
 ```
