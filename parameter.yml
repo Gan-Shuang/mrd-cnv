@@ -1,0 +1,8 @@
+mysql:
+ user: 'gs'
+ passwd: 'huisuan@gs'
+CHR19_correct_ratio:
+ - 1.01
+ichorcna:
+ sensitivity: 'c(0.5,0.6,0.7,0.8,0.9)'
+ maxCN: 5
