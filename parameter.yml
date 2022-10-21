@@ -1,6 +1,6 @@
 mysql:
- user: 'gs'
- passwd: 'huisuan@gs'
+ user: ''
+ passwd: ''
 CHR19_correct_ratio:
  - 1.01
 ichorcna:
